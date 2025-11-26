@@ -1,4 +1,12 @@
-from fastapi import APIRouter
+import time
+from fastapi import APIRouter, HTTPException
+from qdrant_client.models import PointStruct
+
+from app.schemas.Request import QuestionRequest, DocumentRequest
+from app.controllers.WorkflowController import workflow_controller
+from app.services.EmbeddingService import fake_embed
+from config.qdrantDb import qdrant, USING_QDRANT, docs_memory
+from config.setting import env
 
 
 router = APIRouter()
@@ -8,7 +16,7 @@ router = APIRouter()
 def ask_question(req: QuestionRequest):
     start = time.time()
     try:
-        result = chain.invoke({"question": req.question})
+        result = workflow_controller.chain.invoke({"question": req.question})
         return {
             "question": req.question,
             "answer": result["answer"],
@@ -27,7 +35,7 @@ def add_document(req: DocumentRequest):
 
         if USING_QDRANT:
             qdrant.upsert(
-                collection_name="demo_collection",
+                collection_name=env.COLLECTION_NAME,
                 points=[PointStruct(id=doc_id, vector=emb, payload=payload)]
             )
         else:

@@ -1,9 +1,11 @@
 from langgraph.graph import StateGraph, END
+from app.tools.SimpleRetrieverTool import simple_retrieve
+from app.services.SimpleAnswerService import simple_answer
 
 
 class WorkflowController:
     def __init__(self):
-        pass
+        self.chain = self._create_workflow()
 
     def _create_workflow(self):
         try:
@@ -19,3 +21,6 @@ class WorkflowController:
 
         except Exception as e:
             raise e
+
+
+workflow_controller = WorkflowController()

@@ -1,5 +1,7 @@
 from config.setting import env
+from config.qdrantDb import USING_QDRANT, docs_memory
 from routes.api import v1 as api_v1
+from app.controllers.WorkflowController import workflow_controller
 
 
 def setup_routes(app):
@@ -14,7 +16,7 @@ def setup_routes(app):
         return {
             "qdrant_ready": USING_QDRANT,
             "in_memory_docs_count": len(docs_memory),
-            "graph_ready": chain is not None
+            "graph_ready": workflow_controller.chain is not None
         }
 
     @app.get("/")

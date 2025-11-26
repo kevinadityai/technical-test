@@ -1,5 +1,3 @@
-
-
 def simple_answer(state):
     ctx = state["context"]
     if ctx:

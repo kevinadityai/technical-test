@@ -1,0 +1,6 @@
+elastic-apm
+fastapi
+langgraph
+pydantic-settings
+qdrant_client
+uvicorn

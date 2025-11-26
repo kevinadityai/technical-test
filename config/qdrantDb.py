@@ -1,12 +1,25 @@
 import uuid
 import qdrant_client
-from datetime import datetime
-from qdrant_client import models
 from qdrant_client.models import Distance, PointStruct
 
 from .setting import env
 from app.services.QdrantServices import Qdrant
 from app.services.EmbeddingServices import embed
+
+
+# Qdrant setup (assumes local instance)
+try:
+    qdrant = QdrantClient("http://localhost:6333")
+    qdrant.recreate_collection(
+        collection_name="demo_collection",
+        vectors_config=VectorParams(size=128, distance=Distance.COSINE)
+    )
+    USING_QDRANT = True
+except Exception as e:
+    print("⚠️  Qdrant not available. Falling back to in-memory list.")
+    USING_QDRANT = False
+
+
 
 class QdrantDB:
     def __init__(self):

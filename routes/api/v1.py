@@ -4,7 +4,7 @@ from fastapi import APIRouter
 router = APIRouter()
 
 
-@app.post("/ask")
+@router.post("/ask")
 def ask_question(req: QuestionRequest):
     start = time.time()
     try:
@@ -18,7 +18,7 @@ def ask_question(req: QuestionRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/add")
+@router.post("/add")
 def add_document(req: DocumentRequest):
     try:
         emb = fake_embed(req.text)

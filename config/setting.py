@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     APP_NAME: str
     APP_VERSION: str
 
-    # Qdramt
+    # Qdrant
     QDRANT_URL: str
     COLLECTION_NAME: str
     

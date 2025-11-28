@@ -21,7 +21,12 @@ class DocumentStore:
         else:
             self.docs_memory.append(text)
 
-    def search(self, query_embedding: List[float], query_text: str, limit: int = 2) -> List[str]:
+    def search(
+        self, 
+        query_embedding: List[float], 
+        query_text: str, 
+        limit: int = 2
+    ) -> List[str]:
         results = []
         
         if self.using_qdrant:

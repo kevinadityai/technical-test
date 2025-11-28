@@ -12,6 +12,7 @@ def initialize_qdrant():
             vectors_config=VectorParams(size=128, distance=Distance.COSINE)
         )
         return qdrant
+    
     except Exception as e:
         print("Qdrant not available. Falling back to in-memory list.")
         return None

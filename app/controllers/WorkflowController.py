@@ -13,7 +13,10 @@ class WorkflowController:
         self.embedding_service = EmbeddingService()
         self.answer_service = SimpleAnswerService()
         self.document_store = create_document_store()
-        self.retriever_tool = SimpleRetrieverTool(self.document_store, self.embedding_service)
+        self.retriever_tool = SimpleRetrieverTool(
+            self.document_store, 
+            self.embedding_service
+        )
         self.chain = self._create_workflow()
 
     def _create_workflow(self):
@@ -41,7 +44,9 @@ class WorkflowController:
                 context_used=result.get("context", []),
                 latency_sec=round(time.time() - start, 3)
             )
+
             return response_success(response_data.model_dump())
+        
         except Exception as e:
             response_error(str(e))
 
@@ -51,7 +56,9 @@ class WorkflowController:
             doc_id = self.document_store.get_document_count()
             self.document_store.add_document(doc_id, text, emb)
             response_data = AddDocumentResponse(id=doc_id, status="added")
+            
             return response_success(response_data.model_dump())
+        
         except Exception as e:
             response_error(str(e))
 
